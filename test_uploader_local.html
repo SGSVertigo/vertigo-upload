@@ -1,0 +1,14 @@
+<html>
+<body>
+<form action="http://localhost:7071/api/vertigo_upload3r" enctype="multipart/form-data" method="post">
+<input id="fileupload" name="myfile" type="file" />
+
+<label><input name="fields[name]" type="text" required>Name (Required)</label>
+<label><input name="fields[email]" type="email" required>E-mail (Required)</label>
+<label><textarea name="fields[title]" type="text" required></textarea>Title (Required)</label>
+<label><textarea name="fields[description]" rows="5" type="text" required></textarea>Description (Required)</label>
+<label><textarea name="fields[video_url]" type="URL"></textarea>Youtube video (optional)</label>
+ <input type="submit" value="Submit" id="submit">
+</form>
+</body>
+</html>

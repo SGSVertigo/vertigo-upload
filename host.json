@@ -17,6 +17,13 @@
       "path": "vertigostorage/uploaded/{rand-guid}",
       "connection": "AzureWebJobsStorage",
       "direction": "inout"
+    },
+    {
+      "tableName": "Files",
+      "connection": "MyStorageConnectionAppSetting",
+      "name": "tableBinding",
+      "type": "table",
+      "direction": "out"
     }
   ],
   "disabled": false
