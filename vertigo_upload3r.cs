@@ -37,7 +37,7 @@ namespace uploader
                 File file = new File();
 
                 await ParseFiles(ms, req.Content.Headers.ContentType, (string s, Stream st) => blob.UploadFromStream(st), file);
-                file.File_Url = blob.Uri.ToString().ToAzureKeyString();
+                file.File_Url = blob.Uri.ToString();
                 file.RowKey = blob.Name.ToAzureKeyString();
                 TableOperation updateOperation = TableOperation.Insert(file);
                 TableResult result = tableBinding.Execute(updateOperation);
@@ -67,7 +67,6 @@ namespace uploader
                 } else
                 {
                     string content = await httpContent.ReadAsStringAsync();
-                    content = content.ToAzureKeyString();
                     switch (httpContent.Headers.ContentDisposition.Name.Trim('\"'))
                     {
                         case "fields[name]":
