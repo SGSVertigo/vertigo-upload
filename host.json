@@ -1,0 +1,23 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in"
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "blob",
+      "name": "blob",
+      "path": "vertigostorage/uploaded/{rand-guid}",
+      "connection": "AzureWebJobsStorage",
+      "direction": "inout"
+    }
+  ],
+  "disabled": false
+}
