@@ -20,7 +20,7 @@ namespace uploader
         public static async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req,
             [Blob("vertigostorage/uploaded/{rand-guid}")] CloudBlockBlob blob,
-            [Table("Files", Connection = "MyStorageConnectionAppSetting")]CloudTable tableBinding,
+            [Table("Files", Connection = "AzureWebJobsStorage")]CloudTable tableBinding,
             TraceWriter log)
         {
             try
