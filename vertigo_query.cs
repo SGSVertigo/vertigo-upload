@@ -27,27 +27,44 @@ namespace uploader
             try
             {
                 string queryString = TableQuery.GenerateFilterConditionForBool("Approved", QueryComparisons.Equal, true);
-                TableQuery<File> query = new TableQuery<File>();
+                TableQuery<TableFile> query = new TableQuery<TableFile>();
                 query.FilterString = queryString;
-                IEnumerable<File> files = tableBinding.ExecuteQuery(query);
-                string jsonResponse = JsonConvert.SerializeObject(files);
-                return req.CreateResponse(HttpStatusCode.OK, files, MediaTypeHeaderValue.Parse("application/json"));
+                IEnumerable<TableFile> files = tableBinding.ExecuteQuery(query);
+                IEnumerable<File> filteredFiles = files.Select(tf => new File(tf));
+                return req.CreateResponse(HttpStatusCode.OK, filteredFiles, MediaTypeHeaderValue.Parse("application/json"));
             }catch (Exception e)
             {
                 return req.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
             }
         }
 
-        public class File : TableEntity
+        public class TableFile : TableEntity
         {
-            public File()
+            public TableFile()
             {
                 this.PartitionKey = "Data";
                 this.Timestamp = DateTime.Now;
             }
 
             public string Name { get; set; }
-            public string Email { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public string Video_Url { get; set; }
+            public string File_Url { get; set; }
+        }
+
+        public class File
+        {
+            public File(TableFile file)
+            {
+                Name = file.Name;
+                Title = file.Title;
+                Description = file.Description;
+                Video_Url = file.Video_Url;
+                File_Url = file.File_Url;
+            }
+
+            public string Name { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public string Video_Url { get; set; }
