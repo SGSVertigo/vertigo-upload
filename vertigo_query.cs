@@ -31,7 +31,11 @@ namespace uploader
                 query.FilterString = queryString;
                 IEnumerable<TableFile> files = tableBinding.ExecuteQuery(query);
                 IEnumerable<File> filteredFiles = files.Select(tf => new File(tf));
-                return req.CreateResponse(HttpStatusCode.OK, filteredFiles, MediaTypeHeaderValue.Parse("application/json"));
+                HttpResponseMessage response = req.CreateResponse(HttpStatusCode.OK, filteredFiles, MediaTypeHeaderValue.Parse("application/json"));
+                response.Headers.Add("Access-Control-Allow-Credentials", "true");
+                response.Headers.Add("Access-Control-Allow-Origin", "*");
+                response.Headers.Add("Access-Control-Allow-Methods", "GET, OPTIONS");
+                return response;
             }catch (Exception e)
             {
                 return req.CreateResponse(HttpStatusCode.InternalServerError, e.Message);
